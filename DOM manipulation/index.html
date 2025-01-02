@@ -1,0 +1,46 @@
+<html>
+<script>
+// function populateDiv(){
+// const a = document.getElementById("firstNumber").value;
+// const b = document.getElementById("secondNumber").value;
+// // const element = document.getElementById("finalSum");
+
+// fetch("https://sum-server.100xdevs.com/sum?a=" + a + "&b=" + b)
+// .then(function(response){
+// response.text()
+// .then(function(ans){
+// document.getElementById("finalSum").innerHTML = ans;
+// })
+// })
+// }
+
+let timeout;
+function debouncepopulateDiv(){
+    clearTimeout(timeout);  // clear the previous timeout if it exists
+    timeout= setTimeout(function(){
+        populateDiv();
+    },1000)
+}
+
+async function populateDiv(){
+const a = document.getElementById("principal").value;
+const b = document.getElementById("rate").value;
+const c = document.getElementById("time").value;
+//server is down
+const response = await fetch("https://sum-server.100xdevs.com/interest?principal=" + a + "&rate=" + b + "&time=" + c);
+const ans = await response.text();
+document.getElementById("interest").innerHTML = ans;
+}
+
+</script>
+
+<body>
+<input id="principal" oninput="debouncepopulateDiv" type="text" placeholder="Principal"> <br><br>
+<input id="rate" oninput="debouncepopulateDiv" type="text" placeholder="Rate"><br><br>
+<input id="time" oninput="debouncepopulateDiv" type="text" placeholder="Time"><br><br>
+<!-- <button onclick="populateDiv()">Calculate Interest</button> -->
+<div id="interest"></div>
+
+</body>
+</html>
+
